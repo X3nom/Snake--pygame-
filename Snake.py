@@ -1,4 +1,3 @@
-from operator import truediv
 import pygame,sys,random,time
 
 pygame.init()
@@ -6,14 +5,14 @@ pygame.font.init()
 screen = pygame.display.set_mode((800,800))
 clock = pygame.time.Clock()
 
-head = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\head1.png"),(40,40))
-head_eating = pygame.transform.scale(pygame.image.load(r"textures\snake\head2.png"),(40,40))
-body1 = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\body1.png"),(40,40))
-body2 = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\body2.png"),(40,40))
-grass = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\grass.png"),(40,40))
-barricade = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\barricade.png"),(40,40))
-apple = pygame.transform.scale(pygame.image.load(r"Snake--pygame-\textures\snake\apple.png"),(40,40))
-menu_BG = pygame.image.load(r"Snake--pygame-\textures\snake\death BG.png")
+head = pygame.transform.scale(pygame.image.load(r".\textures\snake\head1.png"),(40,40))
+head_eating = pygame.transform.scale(pygame.image.load(r".\textures\snake\head2.png"),(40,40))
+body1 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body1.png"),(40,40))
+body2 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body2.png"),(40,40))
+grass = pygame.transform.scale(pygame.image.load(r".\textures\terrain\grass.png"),(40,40))
+barricade = pygame.transform.scale(pygame.image.load(r".\textures\terrain\barricade.png"),(40,40))
+apple = pygame.transform.scale(pygame.image.load(r".\textures\pickups\apple.png"),(40,40))
+menu_BG = pygame.image.load(r".\textures\Menu\death BG.png")
 
 font = pygame.font.SysFont("Small Fonts",30)
 died = False
