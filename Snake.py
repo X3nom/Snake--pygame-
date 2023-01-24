@@ -64,11 +64,12 @@ while True: # menu loop
     head_pos = [screen.get_size()[0]/2,screen.get_size()[1]/2]
     body_pos = [head_pos]
     head_rotation = 0
+    head_rotation_lock = 0
     event_clock = 0
     apple_pos = [random.randint(0,19)*sprite_size[0],random.randint(0,19)*sprite_size[1]]
     died = False
-    border_kill = True
-    speed = 6
+    border_kill = False
+    speed = 4
     difficulty = 0
 
     while died == False: #                     >>> Game Loop <<<
@@ -101,9 +102,9 @@ while True: # menu loop
             
             head_pos = [x + y*sprite_size[0] for (x, y) in zip(head_pos, direction)]
             direction_lock = direction
-            
-            #head = pygame.transform.rotate(head,)
-            
+            if head_rotation != head_rotation_lock:
+                head = pygame.transform.rotate(head,head_rotation-head_rotation_lock)
+                head_rotation_lock = head_rotation            
 
             #checks if colided with body
             for part in body_pos:
@@ -146,15 +147,19 @@ while True: # menu loop
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w and direction_lock != [0,1]:
                     direction = [0,-1]
+                    head_rotation = 0
                     w = True
                 if event.key == pygame.K_s and direction_lock != [0,-1]:
                     direction = [0,1]
+                    head_rotation = 180
                     s = True
                 if event.key == pygame.K_a and direction_lock != [1,0]:
                     direction = [-1,0]
+                    head_rotation = 90
                     a = True
                 if event.key == pygame.K_d and direction_lock != [-1,0]:
                     direction = [1,0]
+                    head_rotation = 270
                     d = True
         
         
