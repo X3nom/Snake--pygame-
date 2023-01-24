@@ -2,8 +2,10 @@ import pygame,sys,random,time
 
 pygame.init()
 pygame.font.init()
-displayInfo = pygame.display.Info()
-screen = pygame.display.set_mode((800,800)) #set window size
+screen_size = input("enter window size in pixels (one intieger): ")
+if screen_size == '':
+    screen_size = 800
+screen = pygame.display.set_mode((int(screen_size),int(screen_size))) #set window size
 clock = pygame.time.Clock()
 
 sprite_size = [screen.get_size()[0]/20,screen.get_size()[1]/20]
