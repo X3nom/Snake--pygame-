@@ -2,16 +2,18 @@ import pygame,sys,random,time
 
 pygame.init()
 pygame.font.init()
-screen = pygame.display.set_mode((800,800))
+displayInfo = pygame.display.Info()
+screen = pygame.display.set_mode((800,800)) #set window size
 clock = pygame.time.Clock()
 
-head = pygame.transform.scale(pygame.image.load(r".\textures\snake\head1.png"),(40,40))
-head_eating = pygame.transform.scale(pygame.image.load(r".\textures\snake\head2.png"),(40,40))
-body1 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body1.png"),(40,40))
-body2 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body2.png"),(40,40))
-grass = pygame.transform.scale(pygame.image.load(r".\textures\terrain\grass.png"),(40,40))
-barricade = pygame.transform.scale(pygame.image.load(r".\textures\terrain\barricade.png"),(40,40))
-apple = pygame.transform.scale(pygame.image.load(r".\textures\pickups\apple.png"),(40,40))
+sprite_size = [screen.get_size()[0]/20,screen.get_size()[1]/20]
+head = pygame.transform.scale(pygame.image.load(r".\textures\snake\head1.png"),sprite_size)
+head_eating = pygame.transform.scale(pygame.image.load(r".\textures\snake\head2.png"),sprite_size)
+body1 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body1.png"),sprite_size)
+body2 = pygame.transform.scale(pygame.image.load(r".\textures\snake\body2.png"),sprite_size)
+grass = pygame.transform.scale(pygame.image.load(r".\textures\terrain\grass.png"),sprite_size)
+barricade = pygame.transform.scale(pygame.image.load(r".\textures\terrain\barricade.png"),sprite_size)
+apple = pygame.transform.scale(pygame.image.load(r".\textures\pickups\apple.png"),sprite_size)
 menu_BG = pygame.image.load(r".\textures\Menu\death BG.png")
 
 font = pygame.font.SysFont("Small Fonts",30)
@@ -39,7 +41,7 @@ while True: # menu loop
         pygame.display.update()
     for x in range(800): #BG generation
             for y in range(800):
-                if x % 40 == 0 and y % 40 == 0:
+                if x % sprite_size[0] == 0 and y % sprite_size[1] == 0:
                     screen.blit(grass,(x,y))
     screen.blit(menu_BG,(0,0))
     screen.blit(pygame.transform.scale(font.render("SNAKE",False,(255,255,255)),(500,300)),(130,30))
@@ -57,20 +59,20 @@ while True: # menu loop
 
     direction = [0,-1]
     direction_lock = direction
-    head_pos = [360,360]
+    head_pos = [screen.get_size()[0]/2,screen.get_size()[1]/2]
     body_pos = [head_pos]
     head_rotation = 0
     event_clock = 0
-    apple_pos = [random.randint(0,19)*40,random.randint(0,19)*40]
+    apple_pos = [random.randint(0,19)*sprite_size[0],random.randint(0,19)*sprite_size[1]]
     died = False
     border_kill = True
     speed = 6
     difficulty = 0
 
     while died == False: #                     >>> Game Loop <<<
-        for x in range(800): #BG generation
-            for y in range(800):
-                if x % 40 == 0 and y % 40 == 0:
+        for x in range(screen.get_size()[0]): #BG generation
+            for y in range(screen.get_size()[1]):
+                if x % sprite_size[0] == 0 and y % sprite_size[1] == 0:
                     screen.blit(grass,(x,y))
         #--------------------------------------------------        
         event_clock += 1
@@ -82,7 +84,7 @@ while True: # menu loop
                 intersects = True
                 while intersects == True:
                     intersects = False
-                    apple_pos = [random.randint(0,19)*40,random.randint(0,19)*40]
+                    apple_pos = [random.randint(0,19)*sprite_size[0],random.randint(0,19)*sprite_size[1]]
                     for part in body_pos:
                         if part == apple_pos:
                             intersects = True
@@ -95,7 +97,7 @@ while True: # menu loop
                     else:
                         body_pos[0] = head_pos
             
-            head_pos = [x + y*40 for (x, y) in zip(head_pos, direction)]
+            head_pos = [x + y*sprite_size[0] for (x, y) in zip(head_pos, direction)]
             direction_lock = direction
             
             #head = pygame.transform.rotate(head,)
@@ -110,8 +112,8 @@ while True: # menu loop
                 if border_kill == True:
                     died = True
                 else:
-                    head_pos[0] = 760
-            if head_pos[0] > 760:
+                    head_pos[0] = screen.get_size()[0]-sprite_size[0]
+            if head_pos[0] > screen.get_size()[0]-sprite_size[0]:
                 if border_kill == True:
                     died = True
                 else:
@@ -120,8 +122,8 @@ while True: # menu loop
                 if border_kill == True:
                     died = True
                 else:
-                    head_pos[1] = 760
-            if head_pos[1] > 760:
+                    head_pos[1] = screen.get_size()[1]-sprite_size[1]
+            if head_pos[1] > screen.get_size()[1]-sprite_size[1]:
                 if border_kill == True:
                     died = True
                 else:
